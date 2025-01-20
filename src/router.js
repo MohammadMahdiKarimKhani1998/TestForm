@@ -10,12 +10,12 @@ const routes = [
     component: Home, 
   },
   {
-    path: '/form1',
+    path: '/f1',
     name: 'Form1',
     component: Home, 
   },
   {
-    path: '/form2',
+    path: '/f2',
     name: 'Form2',
     component: Home, 
   },

@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 import { User } from '@/users/users.js';
-import { useRouter } from 'vue-router';
 
 const isLoggedIn = ref(false);
 
