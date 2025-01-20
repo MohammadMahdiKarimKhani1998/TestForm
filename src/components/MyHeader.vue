@@ -13,7 +13,7 @@
                             <i class="bi bi-filter-square"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/" @click.prevent="LogLink.action">{{ LogLink.text }}</a></li>
+                            <li><RouterLink class="dropdown-item" :to="LogLink.href" @click.prevent="LogLink.action">{{ LogLink.text }}</RouterLink></li>
                         </ul>
                         </li>
                     </ul>
@@ -24,37 +24,41 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
-  data() {
-    return {
-      isLoggedIn: false,
-    };
-  },
-  computed: {
-    LogLink() {
-      if (this.isLoggedIn) {
+    data() {
         return {
-          text: "Logout",
-          href: "/logout",
-          action: this.logout,
+            isLoggedIn: false,
         };
-      } else {
-        return {
-          text: "Login",
-          href: "/login",
-          action: this.login,
-        };
-      }
     },
-  },
-  methods: {
-    login() {
-      this.isLoggedIn = true;
+    computed: {
+        LogLink() {
+            if (this.isLoggedIn) {
+                return {
+                    text: "Logout",
+                    href: "/",
+                    action: this.logout,
+                };
+            }
+            else {
+                return {
+                    text: "Login",
+                    href: "/login",
+                    action: this.login,
+                };
+            }
+        },
     },
-    logout() {
-      this.isLoggedIn = false;
+    methods: {
+        login() {
+            this.isLoggedIn = true;
+        },
+        logout() {
+            this.isLoggedIn = false;
+        },
     },
-  },
+    components: { RouterLink }
 };
 </script>
 
