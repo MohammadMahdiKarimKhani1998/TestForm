@@ -13,7 +13,7 @@
                             <i class="bi bi-filter-square"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><RouterLink class="dropdown-item" :to="LogLink.href" @click.prevent="LogLink.action">{{ LogLink.text }}</RouterLink></li>
+                            <li><RouterLink class="dropdown-item" :to="LogLink.href" >{{ LogLink.text }}</RouterLink></li>
                         </ul>
                         </li>
                     </ul>
@@ -25,40 +25,34 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+import { useAuth } from '@/users/userStatus.js';
+
+const { isLoggedIn } = useAuth();
+
 
 export default {
     data() {
         return {
-            isLoggedIn: false,
+            UserStatus: isLoggedIn,
         };
     },
     computed: {
         LogLink() {
-            if (this.isLoggedIn) {
+            if (this.UserStatus) {
                 return {
                     text: "Logout",
                     href: "/",
-                    action: this.logout,
                 };
             }
             else {
                 return {
                     text: "Login",
                     href: "/login",
-                    action: this.login,
                 };
             }
         },
     },
-    methods: {
-        login() {
-            this.isLoggedIn = true;
-        },
-        logout() {
-            this.isLoggedIn = false;
-        },
-    },
-    components: { RouterLink }
+    components: { RouterLink },
 };
 </script>
 

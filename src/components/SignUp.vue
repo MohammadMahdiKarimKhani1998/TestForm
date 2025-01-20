@@ -19,10 +19,10 @@
 
                     <div class="row align-items-center">
                         <div class="col-6 d-flex justify-content-start">
-                            <button type="submit" class="btn btn-warning" @click.prevent="GoSignUp">Sign up</button>
+                            <button type="submit" class="btn btn-warning" @click.prevent="GoLogin">Login</button>
                         </div>
                         <div class="col-6 d-flex justify-content-end">
-                            <button type="submit" class="btn btn-success" @click.prevent="GoLogin">Login</button>
+                            <button type="submit" class="btn btn-success" @click.prevent="SignUp">Sign up</button>
                         </div>
                     </div>
                     
@@ -34,26 +34,39 @@
 </template>
 
 <script>
+import { User } from '@/users/users.js';
 import { useAuth } from '@/users/userStatus.js';
 
 const { Login } = useAuth();
 
 export default {
-    data(){
-        return{
-            email : '',
-            password :'',
-        }
+    data() {
+        return {
+        email: '',
+        password: '',
+        };
     },
-    methods :{
-        GoLogin(){
+    methods: {
+        SignUp() {
+        if (User.users.some(user => user.email === this.email)) {
+            alert('User already exists! Please login!');
+        }else{
+            User.addUser({
+                email: this.email,
+                password: this.password
+            });
+
+            alert('User registered successfully!');
             Login(this.email,this.password,this.$router)
-            },
-        GoSignUp(){
-            this.$router.push('/signup');
+            this.email = '';
+            this.password = '';
             }
         },
+        GoLogin(){
+            this.$router.push('/login')
+        }
     }
+};
 </script>
 
 <style>
