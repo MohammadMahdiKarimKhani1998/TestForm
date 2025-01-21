@@ -5,8 +5,8 @@ const userLog = ref(false);
 
 <template>
   <main>
+    <RouterView />
   </main>
-  <RouterView />
 </template>
 
 <style scoped>

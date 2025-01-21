@@ -70,9 +70,8 @@
                 this.formNum = 2
             },
             FormSubmit1(){
-                this.formSubmit = true,
                 this.$emit('formSubmit',true)
-            },
+            }
         }
     };
 </script>

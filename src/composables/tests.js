@@ -7,7 +7,6 @@ export default {
             checkAnswers: ref(Array(20).fill(0)),
             formNum : 1,
             score : 0,
-            formStatus: true,
             equations : [
                 { text: '10 + 153 + 52', answer: 3, options: [210, 220, 215, 230] },
                 { text: '15 + 72 + 38', answer: 2, options: [120, 125, 130, 135] },

@@ -17,8 +17,23 @@
                 </div>
             </div>
         </div>
-        <div>
-            <Tests @formSubmit="setAlert" @MySelectedAnswer="SetSelectedAnswer" @MyCheckAnswers="SetCheckAnswer"/>
+        <div class="container">
+            <div v-if="scoreShow" class="row alert alert-success alert-dismissible fade show" role="alert" @click="GoEnd">
+                <h3>Your score:</h3>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="GoEnd"></button>
+                <h4 class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        {{ score }} / 19
+                    </div>
+                </h4>
+            </div>
+        </div>
+
+        <div v-if="!FormStatus">
+            <BaseHome  @assignment="changeUrl"/>
+        </div>
+        <div v-else >
+            <Tests @MySelectedAnswer="SetSelectedAnswer" @MyCheckAnswers="SetCheckAnswer" @formSubmit="setSubmit"/>
         </div>
     </main>
 
@@ -31,29 +46,38 @@
     import MyHeader from './MyHeader.vue';
     import MyFooter from './MyFooter.vue';
     import Tests from './Tests.vue';
+    import BaseHome from './BaseHome.vue';
     import tests from '@/composables/tests.js';
+
 
     export default {
         mixins: [tests],
         data(){
             return{
                 alertSubmit : false,
+                scoreShow : false,
                 Myselectedanswer : [],
-                Mycheckanswer : []
+                Mycheckanswer : [],
+                FormStatus : false
             }
         },
         components:{
             MyHeader,
             MyFooter,
             Tests,
+            BaseHome
         },
         methods:{
+            setSubmit(val){
+                this.alertSubmit = val
+            },
             setAlert(){
-                (this.alertSubmit)?this.alertSubmit = false:this.alertSubmit=true
+                this.alertSubmit = !this.alertSubmit
             },
             ShowResults(){
-                this.Result()
-                console.log(this.score)
+                this.Result(),
+                this.scoreShow = true,
+                this.alertSubmit = !this.alertSubmit
             },
             Result(){
                 this.Myselectedanswer.forEach((amount, index) => {
@@ -68,10 +92,17 @@
             },
             SetCheckAnswer(selectEmit){
                 this.Mycheckanswer = selectEmit
+            },
+            changeUrl(){
+                this.FormStatus = true,
+                this.$router.push('/f1')
+            },
+            GoEnd(){
+                this.scoreShow = false,
+                this.$router.push('/'),
+                this.FormStatus = false
             }
         }
-        // mounted(){
-        // },
     };
 </script>
 
